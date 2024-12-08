@@ -39,6 +39,14 @@ void EditMap(int x, int y, char str) {
     }
 }
 
+void DrawSprite(int x, int y, int size_x, int size_y, const char spr[]) { 
+    for (int i = 0; i < size_y; i++) {
+        for (int j = 0; j < size_x; j++) {
+            EditMap(x + j, y + i, spr[i * size_x + j]);
+        }
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
