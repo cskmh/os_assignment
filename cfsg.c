@@ -35,6 +35,24 @@ typedef struct Enemy {
 
 Enemy Enemies[MaxEnemy]; 
 
+void Enemy_Create(Enemy* Enemies, int count) { 
+    if (count % 200 == 0) {
+        int a = rand() % 60 + 10;
+        int b = rand() % 10 + 5;
+        Enemies[i_index].x = a;
+        Enemies[i_index].y = b;
+        Enemies[i_index].Active = true;
+        strncpy(Enemies[i_index].sprite, "^O^ ", sizeof(Enemies[i_index].sprite)); // 2x1 크기
+        i_index = (i_index + 1) % MaxEnemy;
+    }
+
+    for (int i = 0; i < MaxEnemy; i++) {
+        if (Enemies[i].Active) {
+            DrawSprite(Enemies[i].x, Enemies[i].y, 3, 1, Enemies[i].sprite);
+        }
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
