@@ -81,6 +81,7 @@ void Bullet_Shoot(Bullet* pBullet, plane* pPlane) {
             }
             else {
                 EditMap(pBullet[i].x, pBullet[i].y, '*');
+            }
 
                 // 적 비행기와 충돌 처리
                 for (int j = 0; j < MaxEnemy; j++) {
@@ -91,10 +92,71 @@ void Bullet_Shoot(Bullet* pBullet, plane* pPlane) {
                         pBullet[i].Active = false; // 총알 비활성화
                     }
                 }
+        }
+    }
+}
+typedef struct Enemy { 
+    int x, y;
+    bool Active;
+    char sprite[5];
+} Enemy;
+
+Enemy Enemies[MaxEnemy]; 
+
+void Enemy_Create(Enemy* Enemies, int count) { 
+    if (count % 200 == 0) {
+        int a = rand() % 60 + 10;
+        int b = rand() % 10 + 5;
+        Enemies[i_index].x = a;
+        Enemies[i_index].y = b;
+        Enemies[i_index].Active = true;
+        strncpy(Enemies[i_index].sprite, "^O^ ", sizeof(Enemies[i_index].sprite)); // 2x1 크기
+        i_index = (i_index + 1) % MaxEnemy;
+    }
+
+    for (int i = 0; i < MaxEnemy; i++) {
+        if (Enemies[i].Active) {
+            DrawSprite(Enemies[i].x, Enemies[i].y, 3, 1, Enemies[i].sprite);
+        }
+    }
+}
+
+void Enemy_Move(Enemy* Enemies) { 
+    for (int i = 0; i < MaxEnemy; i++) {
+        if (!Enemies[i].Active) continue;
+
+        if (rand() % 4 == 0) {
+            Enemies[i].x += rand() % 2 == 0 ? 1 : -1;
+        }
+
+        if (Enemies[i].x < 0) Enemies[i].x = 0;
+        if (Enemies[i].x >= MapXMax - 3) Enemies[i].x = MapXMax - 3; // 적 크기 3 고려
+        if (Enemies[i].y < 0) Enemies[i].y = 0;
+        if (Enemies[i].y >= MapYMax / 2) Enemies[i].y = MapYMax / 2 - 1;
+    }
+}
+
+void Enemy_Attack(Bullet* Enemy_Bullet, Enemy* Enemies, plane* pPlane) { 
+    for (int i = 0; i < MaxBullet; i++) {
+        if (Enemy_Bullet[i].Active) {
+            Enemy_Bullet[i].y++;
+            if (Enemy_Bullet[i].y >= MapYMax) {
+                Enemy_Bullet[i].Active = false;
+            }
+            else {
+                EditMap(Enemy_Bullet[i].x, Enemy_Bullet[i].y, '|');
+
+                // 플레이어와 충돌 감지
+                if (Enemy_Bullet[i].x >= pPlane->x && Enemy_Bullet[i].x < pPlane->x + pPlane->size_x &&
+                    Enemy_Bullet[i].y >= pPlane->y && Enemy_Bullet[i].y < pPlane->y + pPlane->size_y) {
+                    Enemy_Bullet[i].Active = false;
+                    lives--; // 생명 감소
+                }
             }
         }
     }
 
+<<<<<<< HEAD
     if (GetAsyncKeyState(SPACE) & 0x8000) { // SPACE 키로 발사
         if (b_index < MaxBullet) {
             pBullet[b_index].x = pPlane->x + 1;
@@ -106,6 +168,19 @@ void Bullet_Shoot(Bullet* pBullet, plane* pPlane) {
 
     if (GetAsyncKeyState(R) & 0x8000) { // R 키로 재장전
         b_index = 0;
+=======
+    if (rand() % 10 != 0) return;
+
+    if (eb_index >= MaxBullet) eb_index = 0;
+
+    for (int i = 0; i < MaxEnemy; i++) {
+        if (Enemies[i].Active) {
+            Enemy_Bullet[eb_index].x = Enemies[i].x + 1;
+            Enemy_Bullet[eb_index].y = Enemies[i].y + 1;
+            Enemy_Bullet[eb_index].Active = true;
+            eb_index++;
+        }
+>>>>>>> feature-enemy-system
     }
 }
 
