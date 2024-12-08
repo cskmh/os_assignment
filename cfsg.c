@@ -32,6 +32,46 @@ typedef struct Bullet {
     bool Active;
 } Bullet;
 
+Bullet Bullet_info[MaxBullet]; 
+Bullet Enemy_Bullet[MaxBullet]; 
+
+void Bullet_Shoot(Bullet* pBullet, plane* pPlane) { 
+    for (int i = 0; i < MaxBullet; i++) {
+        if (pBullet[i].Active) {
+            pBullet[i].y--;
+            if (pBullet[i].y < 0) {
+                pBullet[i].Active = false;
+            }
+            else {
+                EditMap(pBullet[i].x, pBullet[i].y, '*');
+
+                // 적 비행기와 충돌 처리
+                for (int j = 0; j < MaxEnemy; j++) {
+                    if (Enemies[j].Active &&
+                        pBullet[i].x >= Enemies[j].x && pBullet[i].x < Enemies[j].x + 3 &&
+                        pBullet[i].y == Enemies[j].y) {
+                        Enemies[j].Active = false; // 적 비활성화
+                        pBullet[i].Active = false; // 총알 비활성화
+                    }
+                }
+            }
+        }
+    }
+
+    if (GetAsyncKeyState(SPACE) & 0x8000) { // SPACE 키로 발사
+        if (b_index < MaxBullet) {
+            pBullet[b_index].x = pPlane->x + 1;
+            pBullet[b_index].y = pPlane->y - 1;
+            pBullet[b_index].Active = true;
+            b_index++;
+        }
+    }
+
+    if (GetAsyncKeyState(R) & 0x8000) { // R 키로 재장전
+        b_index = 0;
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
