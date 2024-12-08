@@ -33,6 +33,12 @@ void FillMap(char str[], char str_s, int max_value) {
     }
 }
 
+void EditMap(int x, int y, char str) { 
+    if (x >= 0 && y >= 0 && x < MapXMax && y < MapYMax) { // 좌표 검증
+        mapData[y * MapXMax + x] = str; // 맵 데이터에 값 쓰기
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
