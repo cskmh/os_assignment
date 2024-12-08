@@ -27,6 +27,12 @@ int lives = 3; // 플레이어 생명
 char mapData[MapYMax * MapXMax];
 const int mapValue = MapYMax * MapXMax;  // 맵 크기 정의
 
+void FillMap(char str[], char str_s, int max_value) {    
+    for (int i = 0; i < max_value; i++) {
+        str[i] = str_s;
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
