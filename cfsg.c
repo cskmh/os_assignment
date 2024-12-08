@@ -27,6 +27,11 @@ int lives = 3; // 플레이어 생명
 char mapData[MapYMax * MapXMax];
 const int mapValue = MapYMax * MapXMax;  // 맵 크기 정의
 
+typedef struct Character {    
+    int x, y, size_x, size_y;
+    char sprite[9];
+} plane;
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
