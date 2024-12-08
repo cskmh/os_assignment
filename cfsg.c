@@ -68,6 +68,40 @@ void Enemy_Move(Enemy* Enemies) {
     }
 }
 
+void Enemy_Attack(Bullet* Enemy_Bullet, Enemy* Enemies, plane* pPlane) { 
+    for (int i = 0; i < MaxBullet; i++) {
+        if (Enemy_Bullet[i].Active) {
+            Enemy_Bullet[i].y++;
+            if (Enemy_Bullet[i].y >= MapYMax) {
+                Enemy_Bullet[i].Active = false;
+            }
+            else {
+                EditMap(Enemy_Bullet[i].x, Enemy_Bullet[i].y, '|');
+
+                // 플레이어와 충돌 감지
+                if (Enemy_Bullet[i].x >= pPlane->x && Enemy_Bullet[i].x < pPlane->x + pPlane->size_x &&
+                    Enemy_Bullet[i].y >= pPlane->y && Enemy_Bullet[i].y < pPlane->y + pPlane->size_y) {
+                    Enemy_Bullet[i].Active = false;
+                    lives--; // 생명 감소
+                }
+            }
+        }
+    }
+
+    if (rand() % 10 != 0) return;
+
+    if (eb_index >= MaxBullet) eb_index = 0;
+
+    for (int i = 0; i < MaxEnemy; i++) {
+        if (Enemies[i].Active) {
+            Enemy_Bullet[eb_index].x = Enemies[i].x + 1;
+            Enemy_Bullet[eb_index].y = Enemies[i].y + 1;
+            Enemy_Bullet[eb_index].Active = true;
+            eb_index++;
+        }
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
