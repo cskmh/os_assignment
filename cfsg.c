@@ -32,6 +32,21 @@ typedef struct Character {
     char sprite[9];
 } plane;
 
+void controlcharacter(plane* pPlane) { 8
+    if (GetAsyncKeyState(VK_UP) & 0x8000) {
+        if (pPlane->y > 0) pPlane->y--;
+    }
+    if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+        if (pPlane->y < MapYMax - pPlane->size_y) pPlane->y++;
+    }
+    if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+        if (pPlane->x > 0) pPlane->x--;
+    }
+    if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+        if (pPlane->x < MapXMax - pPlane->size_x) pPlane->x++;
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
