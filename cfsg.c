@@ -53,6 +53,21 @@ void Enemy_Create(Enemy* Enemies, int count) {
     }
 }
 
+void Enemy_Move(Enemy* Enemies) { 
+    for (int i = 0; i < MaxEnemy; i++) {
+        if (!Enemies[i].Active) continue;
+
+        if (rand() % 4 == 0) {
+            Enemies[i].x += rand() % 2 == 0 ? 1 : -1;
+        }
+
+        if (Enemies[i].x < 0) Enemies[i].x = 0;
+        if (Enemies[i].x >= MapXMax - 3) Enemies[i].x = MapXMax - 3; // 적 크기 3 고려
+        if (Enemies[i].y < 0) Enemies[i].y = 0;
+        if (Enemies[i].y >= MapYMax / 2) Enemies[i].y = MapYMax / 2 - 1;
+    }
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
