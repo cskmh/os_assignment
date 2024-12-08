@@ -45,6 +45,24 @@ void DrawSprite(int x, int y, int size_x, int size_y, const char spr[]) {
             EditMap(x + j, y + i, spr[i * size_x + j]);
         }
     }
+typedef struct Character {    
+    int x, y, size_x, size_y;
+    char sprite[9];
+} plane;
+
+void controlcharacter(plane* pPlane) { 8
+    if (GetAsyncKeyState(VK_UP) & 0x8000) {
+        if (pPlane->y > 0) pPlane->y--;
+    }
+    if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+        if (pPlane->y < MapYMax - pPlane->size_y) pPlane->y++;
+    }
+    if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+        if (pPlane->x > 0) pPlane->x--;
+    }
+    if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+        if (pPlane->x < MapXMax - pPlane->size_x) pPlane->x++;
+    }
 }
 
 int main(void) {
