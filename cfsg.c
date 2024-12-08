@@ -27,6 +27,7 @@ int lives = 3; // 플레이어 생명
 char mapData[MapYMax * MapXMax];
 const int mapValue = MapYMax * MapXMax;  // 맵 크기 정의
 
+<<<<<<< HEAD
 void FillMap(char str[], char str_s, int max_value) {    
     for (int i = 0; i < max_value; i++) {
         str[i] = str_s;
@@ -155,8 +156,9 @@ void Enemy_Attack(Bullet* Enemy_Bullet, Enemy* Enemies, plane* pPlane) {
             }
         }
     }
+}
 
-<<<<<<< HEAD
+
     if (GetAsyncKeyState(SPACE) & 0x8000) { // SPACE 키로 발사
         if (b_index < MaxBullet) {
             pBullet[b_index].x = pPlane->x + 1;
@@ -168,7 +170,8 @@ void Enemy_Attack(Bullet* Enemy_Bullet, Enemy* Enemies, plane* pPlane) {
 
     if (GetAsyncKeyState(R) & 0x8000) { // R 키로 재장전
         b_index = 0;
-=======
+    }
+
     if (rand() % 10 != 0) return;
 
     if (eb_index >= MaxBullet) eb_index = 0;
@@ -180,8 +183,21 @@ void Enemy_Attack(Bullet* Enemy_Bullet, Enemy* Enemies, plane* pPlane) {
             Enemy_Bullet[eb_index].Active = true;
             eb_index++;
         }
->>>>>>> feature-enemy-system
+
     }
+
+void ShowOption() {
+    GotoXY(60, 56);
+    printf("조작 : ↑, ↓, ←, →");
+    GotoXY(60, 57);
+    printf("공격 : Space");
+    GotoXY(60, 58);
+    printf("재장전 : R");
+    GotoXY(1, 56);
+    printf("총알 남은 수: %d", MaxBullet - b_index);
+    GotoXY(1, 57);
+    printf("생명: %d", lives);
+
 }
 
 int main(void) {
@@ -196,6 +212,7 @@ int main(void) {
     myPlane.size_x = 3;
     myPlane.size_y = 2;
     strcpy(myPlane.sprite, "_^_");
+
 
     while (1) {
         if (lives <= 0) {
