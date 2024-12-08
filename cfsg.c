@@ -27,6 +27,19 @@ int lives = 3; // 플레이어 생명
 char mapData[MapYMax * MapXMax];
 const int mapValue = MapYMax * MapXMax;  // 맵 크기 정의
 
+void ShowOption() {
+    GotoXY(60, 56);
+    printf("조작 : ↑, ↓, ←, →");
+    GotoXY(60, 57);
+    printf("공격 : Space");
+    GotoXY(60, 58);
+    printf("재장전 : R");
+    GotoXY(1, 56);
+    printf("총알 남은 수: %d", MaxBullet - b_index);
+    GotoXY(1, 57);
+    printf("생명: %d", lives);
+}
+
 int main(void) {
     system("title Flight Game");
     system("mode con:cols=80 lines=60");
@@ -39,6 +52,7 @@ int main(void) {
     myPlane.size_x = 3;
     myPlane.size_y = 2;
     strcpy(myPlane.sprite, "_^_");
+
 
     while (1) {
         if (lives <= 0) {
